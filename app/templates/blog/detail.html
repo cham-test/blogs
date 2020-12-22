@@ -4,4 +4,7 @@
 
 {% block content %}
     <p>Hi it's {{ blog.user.username }} blog!</p>
+    {% for post in posts %}
+        {{ post.id }}: {{ post.title }} {{ post.date_time }}<br>
+    {% endfor %}
 {% endblock %}

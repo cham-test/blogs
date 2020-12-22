@@ -19,3 +19,6 @@ class Post(models.Model):
     title = models.CharField(max_length=300)
     date_time = models.DateTimeField(auto_now_add=True)
     text = models.TextField(max_length=5000)
+
+    class Meta:
+        ordering = ('-date_time',)

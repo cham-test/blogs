@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 
-from .models import Blog
+from .models import Blog, Post
 # Create your views here.
 
 
@@ -14,3 +14,8 @@ class BlogsListView(ListView):
 class BlogDetailView(DetailView):
     model = Blog
     template_name = 'blog/detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['posts'] = Post.objects.filter(blog_id=self.kwargs["pk"])
+        return context
