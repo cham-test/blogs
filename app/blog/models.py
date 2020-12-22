@@ -22,3 +22,6 @@ class Post(models.Model):
 
     class Meta:
         ordering = ('-date_time',)
+
+    def __str__(self):
+        return f'{self.blog.user.username}: {self.title}'
