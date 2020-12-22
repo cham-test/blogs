@@ -1,0 +1,12 @@
+{% block title %}
+    <title>My Account</title>
+{% endblock %}
+
+{% block content %}
+    <a href="{% url 'user:add_post' %}">Add new post</a><br>
+    <h2>My Posts</h2>
+    {% for post in posts %}
+        <a href="">{{ post.title }} {{ post.date_time }}</a><br>
+    {% endfor %}
+{% endblock %}
+
