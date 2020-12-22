@@ -5,6 +5,6 @@
 {% block content %}
     <p>Hi it's {{ blog.user.username }} blog!</p>
     {% for post in posts %}
-        {{ post.id }}: {{ post.title }} {{ post.date_time }}<br>
+        <a href="{% url 'blog:post' pk=post.id %}">{{ post.title }} {{ post.date_time }}</a><br>
     {% endfor %}
 {% endblock %}

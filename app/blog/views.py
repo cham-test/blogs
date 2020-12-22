@@ -19,3 +19,8 @@ class BlogDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['posts'] = Post.objects.filter(blog_id=self.kwargs["pk"])
         return context
+
+
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'blog/post.html'

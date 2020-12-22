@@ -1,0 +1,9 @@
+{% block title %}
+    <title>Post detail -> {{ post.id }}</title>
+{% endblock %}
+
+{% block content %}
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.text }}</p>
+    <p>{{ post.date_time }}</p>
+{% endblock %}
