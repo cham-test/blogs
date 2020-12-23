@@ -9,7 +9,12 @@
             <br>
             {{ post.date_time }}
             <br>
-            <a href="{% url 'blogs:post' pk=post.id %}">{{ post.title }}</a>
+            {% if post in read_posts %}
+                <a href="{% url 'blogs:post' pk=post.id %}">{{ post.title }}</a> read
+
+            {% else %}
+                <a href="{% url 'blogs:post' pk=post.id %}">{{ post.title }}</a>
+            {% endif %}
             <br>
             <p>{{ post.text|truncatewords:20 }}</p>
         </div>

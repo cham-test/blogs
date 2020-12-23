@@ -13,6 +13,8 @@ from blog.models import Blog, Post
 from .models import Subscription, ReadPost
 
 from .forms import AddPostForm
+
+from blog.views import ReadPostMixin
 # Create your views here.
 
 
@@ -49,7 +51,7 @@ class SubscribingView(View):
         return JsonResponse({"success": True}, status=200)
 
 
-class NewsFeedView(View):
+class NewsFeedView(View, ReadPostMixin):
     def _get_subscribed_blog_posts(self) -> Post:
         subscriptions = Subscription.objects.filter(user=self.request.user)
         blogs = []
@@ -62,4 +64,6 @@ class NewsFeedView(View):
 
     def get(self, request, *args, **kwargs):
         posts = self._get_subscribed_blog_posts()
-        return render(request, 'user/news_feed.html', {'posts': posts})
+        read_posts = self.get_read_post()
+        return render(request, 'user/news_feed.html', {'posts': posts,
+                                                       'read_posts': read_posts})

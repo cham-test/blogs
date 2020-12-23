@@ -5,6 +5,10 @@
 {% block content %}
     <p>Hi it's {{ blog.user.username }} blog!</p>
     {% for post in posts %}
-        <a href="{% url 'blog:post' pk=post.id %}">{{ post.title }} {{ post.date_time }}</a><br>
+        {% if post in read_posts %}
+            <a href="{% url 'blog:post' pk=post.id %}">{{ post.title }} {{ post.date_time }}</a> read<br>
+        {% else %}
+            <a href="{% url 'blog:post' pk=post.id %}">{{ post.title }} {{ post.date_time }}</a><br>
+        {% endif %}
     {% endfor %}
 {% endblock %}
