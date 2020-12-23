@@ -13,9 +13,15 @@
             <br>
             {% if post in read_posts %}
                 <a href="{% url 'blogs:post' pk=post.id %}">{{ post.title }}</a> read
-
+                <button class="mark_unread" data-post_id="{{ post.id }}" id="read_post_button_{{ post.id }}">
+                    mark unread
+                </button>
+                <br>
             {% else %}
                 <a href="{% url 'blogs:post' pk=post.id %}">{{ post.title }}</a>
+                <button class="mark_read" data-post_id="{{ post.id }}" id="read_post_button_{{ post.id }}">
+                    mark read
+                </button>
             {% endif %}
             <br>
             <p>{{ post.text|truncatewords:20 }}</p>

@@ -8,9 +8,16 @@
     <p>Hi it's {{ blog.user.username }} blog!</p>
     {% for post in posts %}
         {% if post in read_posts %}
-            <a href="{% url 'blog:post' pk=post.id %}">{{ post.title }} {{ post.date_time }}</a> read<br>
+            <a href="{% url 'blog:post' pk=post.id %}">{{ post.title }} {{ post.date_time }}</a> read
+            <button class="mark_unread" data-post_id="{{ post.id }}" id="read_post_button_{{ post.id }}">
+                mark unread
+            </button>
         {% else %}
-            <a href="{% url 'blog:post' pk=post.id %}">{{ post.title }} {{ post.date_time }}</a><br>
+            <a href="{% url 'blog:post' pk=post.id %}">{{ post.title }} {{ post.date_time }}</a>
+            <button class="mark_read" data-post_id="{{ post.id }}" id="read_post_button_{{ post.id }}">
+                mark read
+            </button>
         {% endif %}
+            <br>
     {% endfor %}
 {% endblock %}

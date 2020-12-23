@@ -1,3 +1,5 @@
+import json
+
 from django.http.response import JsonResponse
 from django.views import View
 from django.views.generic import ListView, DetailView
@@ -32,8 +34,9 @@ class ReadPostMixin:
         return read_post
 
     def delete_read_post(self) -> tuple:
+        post_id = json.loads(self.request.body).get('post_id')
         read_post = ReadPost.objects.get(user=self.request.user,
-                                         post=self.kwargs['pk'])
+                                         post_id=post_id)
         return read_post.delete()
 
 
@@ -62,10 +65,10 @@ class PostDetailView(DetailView, ReadPostMixin):
 
 
 class ReadPostView(View, ReadPostMixin):
-    def post(self):
+    def post(self, request, pk, *args, **kwargs):
         self.create_read_post()
         return JsonResponse({"success": True}, status=200)
 
-    def delete(self):
+    def delete(self, request, pk, *args, **kwargs):
         self.delete_read_post()
         return JsonResponse({"success": True}, status=200)

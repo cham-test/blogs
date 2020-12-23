@@ -10,16 +10,53 @@
     {% endblock %}
 </head>
 <body>
+    {% csrf_token %}
     {% block content %}
         <b>NOT IMPLEMENTED CONTENT</b>
     {% endblock %}
 
 
     {% block js %}
-        <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+
     {% endblock %}
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
     <script>
-        alert('wtf')
+        $(function () {
+            $(document).on('click', '.mark_unread', function () {
+                let post_id = $(this).data('post_id');
+                let button = $(`#read_post_button_${post_id}`)
+                let csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                $.ajax({
+                    url: `/blogs/read-post/${post_id}`,
+                    type: 'delete',
+                    dataType: 'json',
+                    headers: {'X-CSRFToken': csrf_token},
+                    data: JSON.stringify({'post_id': post_id}),
+                    success: function () {
+                        button.removeClass('mark_unread');
+                        button.addClass('mark_read');
+                        button.text('mark read');
+                    }
+                })
+            })
+            $(document).on('click', '.mark_read', function () {
+                let post_id = $(this).data('post_id');
+                let button = $(`#read_post_button_${post_id}`)
+                let csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                $.ajax({
+                    url: `/blogs/read-post/${post_id}`,
+                    type: 'post',
+                    dataType: 'json',
+                    headers: {'X-CSRFToken': csrf_token},
+                    data: JSON.stringify({'post_id': post_id}),
+                    success: function () {
+                        button.removeClass('mark_read');
+                        button.addClass('mark_unread');
+                        button.text('mark unread');
+                    }
+                })
+            })
+        })
     </script>
 </body>
 </html>

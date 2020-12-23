@@ -53,8 +53,7 @@
         $(document).on('click', '.subscribe', function () {
             let blog_id = $(this).data('blog_id');
             let csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value;
-            let span_blog_id = $(`#span_blog_id_${blog_id}`);
-            let button_blog_id = $(`#button_blog_id_${blog_id}`)
+            let button_blog_id = $(`#button_blog_id_${blog_id}`);
 
             $.ajax({
                 url: "{% url 'user:subscribe' %}",
