@@ -35,8 +35,14 @@ class Post(models.Model):
             email.send_update_post_message(self.get_subscribers_email())
         else:
             email.send_new_post_message(self.get_subscribers_email())
+        return super().save()
 
     def get_subscribers_email(self) -> list:
         users = User.objects.filter(subscription_user__blog=self.blog)
         emails = [user.email for user in users]
         return emails
+
+    def delete(self, using=None, keep_parents=False):
+        email = Email(self)
+        email.send_delete_message(self.get_subscribers_email())
+        return super().delete()

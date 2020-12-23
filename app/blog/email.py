@@ -4,6 +4,7 @@ from django.shortcuts import reverse
 
 # from user.models import Subscription
 
+
 class Email:
     def __init__(self, post):
         self.post = post
@@ -22,12 +23,24 @@ class Email:
 
     def generate_update_post_message(self) -> str:
         html = f"""Update post from {self.post.blog.user.username} published at link 
-                <a href='{settings.DOMAIN_NAME}:{settings.PORT}{reverse('blogs:post', args=[self.post.id])}'>Link</a>
-                """
+        <a href='{settings.DOMAIN_NAME}:{settings.PORT}{reverse('blogs:post', args=[self.post.id])}'>Link</a>
+        """
         return html
 
     def send_update_post_message(self, to: list):
         email_message = EmailMessage("Update post", self.generate_update_post_message(),
+                                     settings.EMAIL_HOST_USER, to)
+        email_message.content_subtype = 'html'
+        email_message.send()
+
+    def generate_delete_post_message(self) -> str:
+        html = f"""Delete post from {self.post.blog.user.username} with title {self.post.title} 
+        <a href='{settings.DOMAIN_NAME}:{settings.PORT}{reverse('blogs:detail', args=[self.post.blog.id])}'>Link</a>
+        """
+        return html
+
+    def send_delete_message(self, to: list):
+        email_message = EmailMessage("Delete post", self.generate_delete_post_message(),
                                      settings.EMAIL_HOST_USER, to)
         email_message.content_subtype = 'html'
         email_message.send()
