@@ -1,6 +1,9 @@
+import json
+
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import FormView, CreateView
+from django.http.response import JsonResponse
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -28,3 +31,19 @@ class CreatePostView(CreateView, LoginRequiredMixin):
         blog = Blog.objects.get(user=self.request.user)
         form.instance.blog = blog
         return super().form_valid(form)
+
+
+class SubscribingView(View):
+    def post(self, request, *args, **kwargs):
+        blog_id = json.loads(request.body).get("blog_id")
+        subscription = Subscription.objects.create(user=request.user,
+                                                   blog_id=blog_id)
+        subscription.save()
+        return JsonResponse({"success": True}, status=200)
+
+    def delete(self, request, *args, **kwargs):
+        blog_id = json.loads(request.body).get("blog_id")
+        subscription = Subscription.objects.get(user=request.user,
+                                                blog_id=blog_id)
+        subscription.delete()
+        return JsonResponse({"success": True}, status=200)
