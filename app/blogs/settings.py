@@ -125,6 +125,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+DOMAIN_NAME = 'http://127.0.0.1'
+PORT = 8000
 
 # Email credentials
 EMAIL_HOST = credentials.EMAIL_HOST
