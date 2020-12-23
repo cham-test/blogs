@@ -47,3 +47,19 @@ class SubscribingView(View):
                                                 blog_id=blog_id)
         subscription.delete()
         return JsonResponse({"success": True}, status=200)
+
+
+class NewsFeedView(View):
+    def _get_subscribed_blog_posts(self) -> Post:
+        subscriptions = Subscription.objects.filter(user=self.request.user)
+        blogs = []
+        for subscription in subscriptions:
+            blogs.append(subscription.blog)
+        posts = Post.objects.none()
+        for blog in blogs:
+            posts = posts | Post.objects.filter(blog=blog)
+        return posts.order_by('-date_time')
+
+    def get(self, request, *args, **kwargs):
+        posts = self._get_subscribed_blog_posts()
+        return render(request, 'user/news_feed.html', {'posts': posts})
