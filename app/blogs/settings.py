@@ -79,13 +79,6 @@ WSGI_APPLICATION = 'blogs.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 #
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 
 DATABASES = {
     'default': {
@@ -138,7 +131,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DOMAIN_NAME = 'http://127.0.0.1'
-PORT = 8000
+PORT = 80
 
 # Email credentials
 EMAIL_HOST = credentials.EMAIL_HOST
