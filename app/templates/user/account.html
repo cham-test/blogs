@@ -5,10 +5,18 @@
 {% endblock %}
 
 {% block content %}
-    <a href="{% url 'user:add_post' %}">Add new post</a><br>
+    <a href="{% url 'user:add-post' %}">Add new post</a><br>
     <h2>My Posts</h2>
     {% for post in posts %}
-        <a href="">{{ post.title }} {{ post.date_time }}</a><br>
+        <a href="{% url 'blogs:post' pk=post.id %}">{{ post.title }}</a>
+        {{ post.date_time }}
+        <a href="{% url 'user:update-post' pk=post.id %}">
+            <button>update</button>
+        </a>
+        <a href="{% url 'user:delete-post' pk=post.id %}">
+            <button>delete</button>
+        </a>
+        <br>
     {% endfor %}
 {% endblock %}
 

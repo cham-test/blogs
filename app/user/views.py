@@ -2,7 +2,7 @@ import json
 
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import FormView, CreateView
+from django.views.generic import FormView, CreateView, UpdateView, DeleteView
 from django.http.response import JsonResponse
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -33,6 +33,19 @@ class CreatePostView(CreateView, LoginRequiredMixin):
         blog = Blog.objects.get(user=self.request.user)
         form.instance.blog = blog
         return super().form_valid(form)
+
+
+class UpdatePostView(UpdateView, LoginRequiredMixin):
+    template_name = 'user/update_post.html'
+    success_url = reverse_lazy('user:account')
+    model = Post
+    fields = ["title", "text"]
+
+
+class DeletePostView(DeleteView, LoginRequiredMixin):
+    success_url = reverse_lazy('user:account')
+    model = Post
+    template_name = 'user/delete_post.html'
 
 
 class SubscribingView(View):
