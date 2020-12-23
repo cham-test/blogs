@@ -4,12 +4,15 @@
 
 {% block content %}
     {% for post in posts %}
-        {{ post.date_time }}
-        <br>
-        <a href="{% url 'blogs:post' pk=post.id %}">{{ post.title }}</a>
-        <br>
-        <a href="{% url 'blogs:post' pk=post.id %}">{{ post.text|truncatewords:20 }}</a>
-        <br>
+        <div style="margin-bottom: 40px">
+            <a href="{% url 'blogs:post' pk=post.id %}">{{ post.blog.user }}</a>
+            <br>
+            {{ post.date_time }}
+            <br>
+            <a href="{% url 'blogs:post' pk=post.id %}">{{ post.title }}</a>
+            <br>
+            <p>{{ post.text|truncatewords:20 }}</p>
+        </div>
     {% endfor %}
 
 {% endblock %}
