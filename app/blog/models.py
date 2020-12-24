@@ -32,10 +32,12 @@ class Post(models.Model):
              update_fields=None):
         email = Email(self)
         if self.pk:
+            post = super(Post, self).save()
             email.send_update_post_message(self.get_subscribers_email())
         else:
+            post = super(Post, self).save()
             email.send_new_post_message(self.get_subscribers_email())
-        return super().save()
+        return post
 
     def get_subscribers_email(self) -> list:
         users = User.objects.filter(subscription_user__blog=self.blog)

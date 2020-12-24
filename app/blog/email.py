@@ -11,7 +11,7 @@ class Email:
 
     def generate_new_post_message(self) -> str:
         html = f"""New post from {self.post.blog.user.username} published at blog 
-        <a href='{settings.DOMAIN_NAME}:{settings.PORT}{reverse('blogs:detail', args=[self.post.blog.id])}'>Link</a>
+        <a href='{settings.DOMAIN_NAME}:{settings.PORT}{reverse('blogs:post', args=[self.post.id])}'>Link</a>
         """
         return html
 
